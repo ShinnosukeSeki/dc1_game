@@ -1,6 +1,6 @@
 class StoppingSpike{
-  Spike(float spikeX, float spikeY, float spikeS){
-    super(spikeX, spikeY, spikeS);
+  StoppingSpike(float spikeX, float spikeY, float spikeS, char spikeD){
+    super(spikeX, spikeY, spikeS, spikeD);
   }
   
   void move(){

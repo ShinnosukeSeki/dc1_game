@@ -1,13 +1,14 @@
 abstract class Spike extends Trap{
   float x,y,size; //x,yはトゲの中心座標
   float stepX, stepY;
-  char dir; //トゲの向き(上：u，下：d，左：l，右：r)
+  char direction; //トゲの向き(上：u，下：d，左：l，右：r)
   boolean isMoved = false;
   
-  Spike(float spikeX, float spikeY, float spikeS){
+  Spike(float spikeX, float spikeY, float spikeS, char spikeD){
     x = spikeX;
     y = spikeY;
     size = spikeS;
+    direction = spikeD;
   }
   
   void display(){
@@ -27,4 +28,6 @@ abstract class Spike extends Trap{
     
     //↑ triangle(x-size/2,y+size/2,x+size/2,y+size/2,x,y-size/2)と同じ三角形
   }
+  
+  abstract void move();
 }
