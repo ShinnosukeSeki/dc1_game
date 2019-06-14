@@ -3,7 +3,7 @@
                              グローバル変数の宣言，初期化
 ======================================================================
 */
-Spike s1;
+Spike s1, s2;
 
 /*
 ======================================================================
@@ -18,7 +18,8 @@ void setup() {
   textSize(30);
   textAlign(CENTER, CENTER);
   
-  s1 = new StoppingSpike(width/2, height/2, 20, 'u');
+  s1 = new MovingSpike(width/2, height, 20, 'u');
+  s2 = new StoppingSpike(width/2, height/2, 20, 'd');
 }
 
 /*
@@ -31,7 +32,8 @@ void draw() {
   background(255);
   
   s1.display();
-  
+  s2.display();
+  s1.move(3.0);
 }
 
 /*
