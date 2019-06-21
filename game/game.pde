@@ -4,7 +4,7 @@
 ======================================================================
 */
 Spike s1, s2;
-
+Magma m1;
 /*
 ======================================================================
                              setup()関数
@@ -20,6 +20,8 @@ void setup() {
   
   s1 = new MovingSpike(width/2, height, 20, 'u');
   s2 = new StoppingSpike(width/2, height/2, 20, 'd');
+  
+  m1 = new StoppingMagma(200, 400, 50, 10);
 }
 
 /*
@@ -34,6 +36,8 @@ void draw() {
   s1.display();
   s2.display();
   s1.move(3.0);
+  
+  m1.display();
 }
 
 /*
