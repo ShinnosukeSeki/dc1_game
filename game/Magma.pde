@@ -10,7 +10,9 @@ abstract class Magma extends Trap{
   
   void display() {
     fill(color(255, 0, 0));                   //赤色にする
+    noStroke();                               //輪郭なしにする
     rect(x, y, w, h);                         //マグマを描画
+    stroke(0);                                //輪郭ありにする
   }
   
   abstract void move(float step);
