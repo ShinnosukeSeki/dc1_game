@@ -4,6 +4,7 @@
 ======================================================================
 */
 Java_c player;
+Wall w1;
 Spike s1, s2;
 Magma m1;
 /*
@@ -23,6 +24,8 @@ void setup() {
   s2 = new StoppingSpike(width/2, height/2, 20, 'd');
   
   m1 = new StoppingMagma(200, 400, 50, 10);
+  
+  w1 = new StoppingWall(0, 0, 20, height);
 }
 
 /*
@@ -33,6 +36,8 @@ void setup() {
 void draw() {
   
   background(255);
+  
+  w1.display();
   
   s1.display();
   s2.display();

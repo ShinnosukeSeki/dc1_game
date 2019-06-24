@@ -9,8 +9,9 @@ abstract class Wall{
   }
   
   void display(){
+    fill(200, 150, 150);
     rect(x, y, w, h);
   }
     
-  abstract void move(float step);
+  abstract void move(float stepX, float stepY, float limitX, float limitY);
 }
