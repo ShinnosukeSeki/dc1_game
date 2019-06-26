@@ -1,24 +1,24 @@
-class Java_c {
-  float r, x, y, dx, dy, vx, vy, a, g;
+class JavaC {
+  float x, y, dx, dy, vy;
   
   // Javaちゃんの大きさ
-  r = 15.0;
+  float r = 15.0;
   
   // x方向の速さ
-  vx = 2.0;
+  float vx = 2.0;
   
   // y方向の初速度
-  a = 7.54;
+  float a = 7.54;
   
   // 重力
-  g = 0.2;
+  float g = 0.2;
   
   // ジャンプしているか否か
   boolean isJump = false;
   
-  Java_c(int initial_x, int initial_y) {
+  JavaC(float initial_x, float initial_y) {
     x = initial_x;
-    y = initial_y;
+    y = initial_y-r;
   }
   
   
@@ -32,12 +32,12 @@ class Java_c {
     
   }
   
-  void move() {
+  void move(float ground) {
     
     keyDirection();
     
     updateX();
-    updateY();
+    updateY(ground);
   
   }
   
@@ -95,7 +95,7 @@ class Java_c {
   }
   
     
-  void updateY(int floorHeight) {
+  void updateY(float ground) {
     
     // 自キャラのy方向の更新量の変化分を設定(重力？)
     float g = 0.2;
@@ -107,7 +107,7 @@ class Java_c {
       }
       
       // 自キャラがウィンドウの下端に到達したら
-      if(y + r > floorHeight) {
+      if(y + r > ground) {
         isJump = false;
         dy = 0;
         y = floorHeight - r;
@@ -119,5 +119,8 @@ class Java_c {
     }
     
   }
-
+  
+  void keyReleased() {
+    keyCode = 40;
+  }
 }
