@@ -5,9 +5,10 @@
 */
 
 int stage;          //ステージ
-int a = 2,b =0 ,c =0 ,d = 0;        //aはステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。
+int a = 2,b =0 ,c =0 ,d = 1;        //aはステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。
 int n_floor=a+b+c+d;
 Floor floor[];
+Flag flag;
 JavaC player;
 Wall w1;
 Spike s1, s2;
@@ -23,18 +24,19 @@ void setup() {
   
   stage = 0;
   
-  frameRate(120);
+  frameRate(60);
   textSize(30);
   textAlign(CENTER, CENTER);
-  
+  flag = new Flag();
   floor = new Floor[n_floor];
   floor[0] = new Floor(0,350,width,10);
   floor[1] = new Floor(-100,300,250,20);
+  floor[2] = new Floor(0,height-30,width,5);
   /*
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
   
-  player = new JavaC(width/2, height-500);
+  player = new JavaC(width/2, height-100);
   
   s1 = new MovingSpike(width/2, height, 20, 'u');
   s2 = new StoppingSpike(width/2, height/2, 20, 'd');
@@ -70,19 +72,21 @@ void draw() {
     
     case 1:
     //ステージ1の内容はここで書いてください
-      player.move(a,b);
+      player.move(a,a+b);
       judge_stage();
       break;
     
     case 2:
     //ステージ2内容はここで書いてください
-      player.move(c,d);
+      player.move(a+b,a+b+c);
       judge_stage();
       break;
     
     case 3:
     //ステージゴール画面(3)の内容はここで書いてください
-      player.move(d,n_floor-1);
+      floor[2].display();
+      flag.display();
+      player.move(a+b+c,n_floor);
       judge_stage();
       break;
     
