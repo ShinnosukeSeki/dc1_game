@@ -1,4 +1,4 @@
-class JavaC {
+class Java_c {
   float x, y, dx, dy, vy;
   
   // Javaちゃんの大きさ
@@ -16,7 +16,10 @@ class JavaC {
   // ジャンプしているか否か
   boolean isJump = false;
   
-  JavaC(float initial_x, float initial_y) {
+  // 死んだか否か
+  boolean isDied = false;
+  
+  Java_c(float initial_x, float initial_y) {
     x = initial_x;
     y = initial_y-r;
   }

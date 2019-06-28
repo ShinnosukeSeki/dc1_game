@@ -1,11 +1,10 @@
 abstract class Spike extends Trap{
-  float x,y,size; //x,yはトゲの中心座標
+  float x,y,size = 30; //x,yはトゲの中心座標
   char direction; //トゲの向き(上：u，下：d，左：l，右：r)
   
-  Spike(float spikeX, float spikeY, float spikeS, char spikeD){
+  Spike(float spikeX, float spikeY, char spikeD){
     x = spikeX;
     y = spikeY;
-    size = spikeS;
     direction = spikeD;
   }
   

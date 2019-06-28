@@ -1,6 +1,6 @@
 class MovingSpike extends Spike{
-  MovingSpike(float spikeX, float spikeY, float spikeS, char spikeD){
-    super(spikeX, spikeY, spikeS, spikeD);
+  MovingSpike(float spikeX, float spikeY, char spikeD){
+    super(spikeX, spikeY, spikeD);
   }
   
   void move(float step){

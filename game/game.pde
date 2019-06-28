@@ -4,12 +4,13 @@
 ======================================================================
 */
 
-int stage;          //ステージ
-int a = 2,b =0 ,c =0 ,d = 1;        //aはステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。
-int n_floor=a+b+c+d;
+int stage;//ステージ
+int floors[] = {2, 0, 0, 1}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int n_floor = 0;
+
 Floor floor[];
 Flag flag;
-JavaC player;
+Java_c player;
 Wall w1;
 Spike s1, s2;
 Magma m1;
@@ -28,6 +29,9 @@ void setup() {
   textSize(30);
   textAlign(CENTER, CENTER);
   flag = new Flag();
+  for(int i=0; i<floors.length; i++){
+    n_floor += floors[i];
+  }
   floor = new Floor[n_floor];
   floor[0] = new Floor(0,350,width,10);
   floor[1] = new Floor(-100,300,250,20);
@@ -36,10 +40,10 @@ void setup() {
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
   
-  player = new JavaC(width/2, height-100);
+  player = new Java_c(width/2, height-100);
   
-  s1 = new MovingSpike(width/2, height, 20, 'u');
-  s2 = new StoppingSpike(width/2, height/2, 20, 'd');
+  s1 = new MovingSpike(width/2, height, 'u');
+  s2 = new StoppingSpike(width/2, height/2, 'd');
   
   m1 = new StoppingMagma(200, 400, 50, 10);
   
@@ -66,19 +70,19 @@ void draw() {
       s2.display();
       s1.move(3.0);
       m1.display();
-      player.move(0,a);
+      player.move(0, floors[0]);
       judge_stage();
       break;
     
     case 1:
     //ステージ1の内容はここで書いてください
-      player.move(a,a+b);
+      player.move(floors[0], floors[0]+floors[1]);
       judge_stage();
       break;
     
     case 2:
     //ステージ2内容はここで書いてください
-      player.move(a+b,a+b+c);
+      player.move(floors[0]+floors[1],floors[0]+floors[1]+floors[2]);
       judge_stage();
       break;
     
@@ -86,7 +90,7 @@ void draw() {
     //ステージゴール画面(3)の内容はここで書いてください
       floor[2].display();
       flag.display();
-      player.move(a+b+c,n_floor);
+      player.move(floors[0]+floors[1]+floors[2],n_floor);
       judge_stage();
       break;
     
