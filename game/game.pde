@@ -7,17 +7,21 @@
 int stage;//ステージ
 int floors[] = {1, 4, 0}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
 int walls[]  = {2, 0, 0};
+int spikes[] = {0, 4, 0};
+int magmas[] = {0, 1, 0};
 
 int n_floor = 0;
 int n_wall = 0;
+int n_spike = 0;
+int n_magma = 0;
 float ground=1000;
 
 Wall wall[];
 Floor floor[];
 Flag flag;
 Java_c player;
-Spike s1, s2;
-Magma m1;
+Spike spike[];
+Magma magma[];
 /*
 ======================================================================
                              setup()関数
@@ -52,14 +56,25 @@ void setup() {
     n_wall += walls[i];
   }
   wall = new Wall[n_wall];
-  wall[0] = new Wall(0,0,500);
-  wall[1] = new MovingWall(100,0,500);
+  wall[0] = new Wall(100,0,100);
+  wall[1] = new MovingWall(50,0,300);
   
-  player = new Java_c(width/2, height-100-50);
+  player = new Java_c(width/2, height-150);
   
-  s1 = new MovingSpike(width/2, height, 'u');
-  s2 = new StoppingSpike(width/2, height/2, 'd');
-  m1 = new StoppingMagma(200, 400, 50, 10);
+  for(int i=0; i < spikes.length; i++){
+    n_spike += spikes[i];
+  }
+  spike = new Spike[n_spike];
+  spike[0] = new MovingSpike(width/2, height-30, 'u');
+  spike[1] = new StoppingSpike(width/2, height-390, 'd');
+  spike[2] = new StoppingSpike(400, height-30, 'u');
+  spike[3] = new StoppingSpike(500, height-30, 'u');
+  
+  for(int i=0; i < magmas.length; i++){
+    n_magma += magmas[i];
+  }
+  magma = new Magma[n_magma];
+  magma[0] = new StoppingMagma(200, 400, 50, 10);
   
 
 }
@@ -97,11 +112,6 @@ void draw() {
       }
       //
       
-      s1.display();
-      s2.display();
-      s1.move(3.0);
-      m1.display();
-      
       player.move();
       judge_stage();
       break;
@@ -129,6 +139,13 @@ void draw() {
         }
       }
       //
+      
+      spike[0].display();
+      spike[1].display();
+      spike[2].display();
+      spike[3].display();
+      spike[0].move(3.0);
+      magma[0].display();
       
       player.move();
       judge_stage();
