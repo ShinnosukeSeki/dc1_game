@@ -13,8 +13,8 @@ class Floor{
   }
   //playerが床に立てるかのを調べる
   boolean isstand(){
-    if(player.x >= x && player.x <= x+l){
-      if(player.y - y >= 0){
+    if(player.y - y >= 0 && player.y - y <= 10){
+      if(player.x >= x && player.x <= x+l){ 
         return true;
       }
     }
