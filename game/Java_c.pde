@@ -91,13 +91,8 @@ class Java_c {
         isJump = false;
         dy = 0;
         y = ground - r;
-        keyCode = 40;
         }
         // 自キャラのy座標の更新
       y += dy;
-  }
-  
-  void keyReleased() {
-    keyCode = 40;
   }
 }
