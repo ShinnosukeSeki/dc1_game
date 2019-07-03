@@ -5,7 +5,7 @@
 */
 
 int stage;//ステージ
-int floors[] = {3, 0, 0}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int floors[] = {1, 4, 0}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
 int walls[]  = {2, 0, 0};
 
 int n_floor = 0;
@@ -38,9 +38,11 @@ void setup() {
     n_floor += floors[i];
   }
   floor = new Floor[n_floor];
-  floor[0] = new Floor(0,350,width-200,10);
-  floor[1] = new Floor(-100,300,250,20);
-  floor[2] = new Floor(0,height-30,width,5);
+  floor[0] = new Floor(0,height-150,width-100,10);
+  floor[1] = new Floor(0,height-30,width,10);
+  floor[2] = new Floor(200,height-150, 200, 10);
+  floor[3] = new Floor(350, height-270, 100, 10);
+  floor[4] = new Floor(420, height-400, 50, 10);
   /*
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
@@ -50,10 +52,10 @@ void setup() {
     n_wall += walls[i];
   }
   wall = new Wall[n_wall];
-  wall[0] = new Wall(500,0,500);
+  wall[0] = new Wall(0,0,500);
   wall[1] = new MovingWall(100,0,500);
   
-  player = new Java_c(width/2, height-100);
+  player = new Java_c(width/2, height-100-50);
   
   s1 = new MovingSpike(width/2, height, 'u');
   s2 = new StoppingSpike(width/2, height/2, 'd');
@@ -75,7 +77,6 @@ void draw() {
     case 0:
     //ステージ開始画面(0)の内容はここで書いてください
       floor[0].display();
-      floor[1].display();
       wall[0].display();
       wall[1].display();
       wall[1].move(1,0,100,0);
@@ -106,6 +107,10 @@ void draw() {
       break;
     
     case 1:
+      floor[1].display();
+      floor[2].display();
+      floor[3].display();
+      floor[4].display();
     
     //ステージ1の内容はここで書いてください
       //壁判定
