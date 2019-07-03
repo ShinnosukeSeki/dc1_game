@@ -6,12 +6,16 @@
 
 int stage;//ステージ
 int floors[] = {2, 0, 0, 1}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
-int n_floor = 0;
+int walls[]  = {2, 0, 0, 0};
 
+int n_floor = 0;
+int n_wall = 0;
+float ground=1000;
+
+Wall wall[];
 Floor floor[];
 Flag flag;
 Java_c player;
-Wall w1;
 Spike s1, s2;
 Magma m1;
 /*
@@ -29,6 +33,7 @@ void setup() {
   textSize(30);
   textAlign(CENTER, CENTER);
   flag = new Flag();
+  //floorのセット
   for(int i=0; i<floors.length; i++){
     n_floor += floors[i];
   }
@@ -40,14 +45,20 @@ void setup() {
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
   
+  //Wallのセット
+  for(int i=0; i < walls.length; i++){
+    n_wall += walls[i];
+  }
+  wall = new Wall[n_wall];
+  wall[0] = new Wall(500,0,500);
+  wall[1] = new Wall(100,0,500);
+  
   player = new Java_c(width/2, height-100);
   
   s1 = new MovingSpike(width/2, height, 'u');
   s2 = new StoppingSpike(width/2, height/2, 'd');
-  
   m1 = new StoppingMagma(200, 400, 50, 10);
   
-  w1 = new StoppingWall(0, 0, 20, height);
 
 }
 
@@ -65,24 +76,46 @@ void draw() {
     //ステージ開始画面(0)の内容はここで書いてください
       floor[0].display();
       floor[1].display();
-      w1.display();
+      wall[0].display();
+      wall[1].display();
+      wall[1].move(1,0,100,0);
+      //壁判定
+      for(int i = 0; i < walls[0]; i++){
+        wall[i].isbound();
+      }
+      //
+      
+      //床判定
+      for(int i = 0; i < floors[0]; i++){
+        if(floor[i].isstand()){
+          ground = floor[i].y;
+          break;
+        }else{
+          ground =1000;
+        }
+      }
+      println(ground);
+      //
+      
       s1.display();
       s2.display();
       s1.move(3.0);
       m1.display();
-      player.move(0, floors[0]);
+      
+      player.move();
+      println(player.y);
       judge_stage();
       break;
     
     case 1:
     //ステージ1の内容はここで書いてください
-      player.move(floors[0], floors[0]+floors[1]);
+      player.move();
       judge_stage();
       break;
     
     case 2:
     //ステージ2内容はここで書いてください
-      player.move(floors[0]+floors[1],floors[0]+floors[1]+floors[2]);
+      player.move();
       judge_stage();
       break;
     
@@ -90,7 +123,7 @@ void draw() {
     //ステージゴール画面(3)の内容はここで書いてください
       floor[2].display();
       flag.display();
-      player.move(floors[0]+floors[1]+floors[2],n_floor);
+      player.move();
       judge_stage();
       break;
     

@@ -35,12 +35,12 @@ class Java_c {
     
   }
   
-  void move(int first ,int last) {
+  void move() {
     
     keyDirection();
     
     updateX();
-    updateY(first,last);
+    updateY();
   
   }
   
@@ -76,19 +76,10 @@ class Java_c {
   }
   
     
-  void updateY(int first,int last) {
+  void updateY() {
     
     // 自キャラのy方向の更新量の変化分を設定(重力？)
     float g = 0.2;
-    
-    float ground = -100; //-100に設定する,もし床に立つとgroundは更新される,更新されず-100のままではずっと落ちる(後ろの部分はまだ実現できていない)
-     
-    for(int i = first; i < last ; i++){
-      if(floor[i].isstand()){
-        ground = floor[i].y;
-        break;
-      }
-    }
     
     // ジャンプモードの時の処理
     if(isJump == true) {
@@ -97,18 +88,19 @@ class Java_c {
       }
       
       // 自キャラが床の上に到達したら
-      if(ground != -100){
-        if(y + r > ground){
-            isJump = false;
-            dy = 0;
-            y = ground - r;
-            keyCode = 40;
-          }
+      if(y + r > ground){
+        isJump = false;
+        dy = 0;
+        y = ground - r;
+        keyCode = 40;
+        }
+    }else{
+      if(y + r < ground){
+        dy += g;
       }
-    
+    }
       // 自キャラのy座標の更新
       y += dy;
-    }
   }
   
   void keyReleased() {
