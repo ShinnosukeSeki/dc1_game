@@ -5,8 +5,8 @@
 */
 
 int stage;//ステージ
-int floors[] = {2, 0, 0, 1}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
-int walls[]  = {2, 0, 0, 0};
+int floors[] = {2, 0, 0}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int walls[]  = {2, 0, 0};
 
 int n_floor = 0;
 int n_wall = 0;
@@ -106,25 +106,51 @@ void draw() {
       break;
     
     case 1:
+    
     //ステージ1の内容はここで書いてください
+      //壁判定
+      for(int i = walls[0]; i < walls[0]+walls[1]; i++){
+        wall[i].isbound();
+      }
+      //
+      
+      //床判定
+      for(int i = floors[0]; i < floors[0]+floors[1]; i++){
+        if(floor[i].isstand()){
+          ground  = floor[i].y+player.r;
+          break;
+        }else{
+          ground =1000;
+        }
+      }
+      //
+      
       player.move();
       judge_stage();
       break;
     
     case 2:
     //ステージ2内容はここで書いてください
+      //壁判定
+      for(int i = walls[0]+walls[1]; i < walls[0]+walls[1]+walls[2]; i++){
+        wall[i].isbound();
+      }
+      //
+      
+      //床判定
+      for(int i = floors[0]+floors[1]; i < floors[0]+floors[1]+floors[2]; i++){
+        if(floor[i].isstand()){
+          ground  = floor[i].y+player.r;
+          break;
+        }else{
+          ground =1000;
+        }
+      }
+      //
       player.move();
       judge_stage();
       break;
-    
-    case 3:
-    //ステージゴール画面(3)の内容はここで書いてください
-      floor[2].display();
-      flag.display();
-      player.move();
-      judge_stage();
-      break;
-    
+      
     default:
       break;
   }  
@@ -148,19 +174,8 @@ void judge_stage(){
       player.x = 1;
     }
   }
-  //ステージ2には１に戻せるし,ステージ3にも行ける
-  if(stage == 2  ){
-    if(player.x >= width){
-      stage++;
-      player.x = 1;
-    }
-    if(player.x <= 0){
-      stage--;
-      player.x = width - 1;
-    }
-  }
-  //ステージ3はステージ2には戻せるが、次のステージが無いため進めない
-  if(stage == 3){
+  //ステージ2はステージ1には戻せるが、次のステージが無いため進めない
+  if(stage == 2){
     if(player.x <= 0){
       stage--;
       player.x = width - 1;
