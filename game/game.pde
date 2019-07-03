@@ -29,7 +29,7 @@ void setup() {
   
   stage = 0;
   
-  frameRate(60);
+  frameRate(120);
   textSize(30);
   textAlign(CENTER, CENTER);
   flag = new Flag();
@@ -88,13 +88,12 @@ void draw() {
       //床判定
       for(int i = 0; i < floors[0]; i++){
         if(floor[i].isstand()){
-          ground = floor[i].y;
+          ground  = floor[i].y+player.r;
           break;
         }else{
           ground =1000;
         }
       }
-      println(ground);
       //
       
       s1.display();
@@ -103,7 +102,6 @@ void draw() {
       m1.display();
       
       player.move();
-      println(player.y);
       judge_stage();
       break;
     

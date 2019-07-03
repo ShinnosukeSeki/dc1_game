@@ -9,7 +9,7 @@ class Floor{
   
   void display(){
     fill(0);
-    rect(x, y, l, h);
+    rect(x, y+player.r, l, h);
   }
   //playerが床に立てるかのを調べる
   boolean isstand(){

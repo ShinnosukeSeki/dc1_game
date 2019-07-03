@@ -82,7 +82,6 @@ class Java_c {
     float g = 0.2;
     
     // ジャンプモードの時の処理
-    if(isJump == true) {
       if(dy < a) { 
         dy += g;
       }
@@ -94,12 +93,7 @@ class Java_c {
         y = ground - r;
         keyCode = 40;
         }
-    }else{
-      if(y + r < ground){
-        dy += g;
-      }
-    }
-      // 自キャラのy座標の更新
+        // 自キャラのy座標の更新
       y += dy;
   }
   
