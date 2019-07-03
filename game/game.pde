@@ -38,7 +38,7 @@ void setup() {
     n_floor += floors[i];
   }
   floor = new Floor[n_floor];
-  floor[0] = new Floor(0,350,width,10);
+  floor[0] = new Floor(0,350,width-200,10);
   floor[1] = new Floor(-100,300,250,20);
   floor[2] = new Floor(0,height-30,width,5);
   /*
@@ -51,7 +51,7 @@ void setup() {
   }
   wall = new Wall[n_wall];
   wall[0] = new Wall(500,0,500);
-  wall[1] = new Wall(100,0,500);
+  wall[1] = new MovingWall(100,0,500);
   
   player = new Java_c(width/2, height-100);
   
