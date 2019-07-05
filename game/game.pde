@@ -6,7 +6,7 @@
 
 int stage;//ステージ
 int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
-int walls[]  = {2, 0, 0};
+int walls[]  = {0, 2, 0};
 int spikes[] = {0, 4, 0};
 int magmas[] = {0, 1, 0};
 
@@ -14,7 +14,7 @@ int n_floor = 0;
 int n_wall = 0;
 int n_spike = 0;
 int n_magma = 0;
-float ground=1000;
+float ground = 1000;
 
 Wall wall[];
 Floor floor[];
@@ -56,7 +56,7 @@ void setup() {
     n_wall += walls[i];
   }
   wall = new Wall[n_wall];
-  wall[0] = new Wall(100,0,100);
+  wall[0] = new Wall(100,height-110,100);
   wall[1] = new MovingWall(50,0,300);
   
   player = new Java_c(width/2, height-150);
@@ -96,21 +96,17 @@ void draw() {
   switch(stage){
     case 0:
     //ステージ開始画面(0)の内容はここで書いてください
-      for(int i = 0; i < floors[0]; i++){
-        floor[i].display();
-      }
-
-      for(int i = 0; i < walls[0]; i++){
-        wall[i].display();
-      }
-      wall[1].move(1,0,100,0);
-      
+    
       //壁判定
       for(int i = 0; i < walls[0]; i++){
+        wall[i].display();
         wall[i].isbound();
       }
       //
       
+      for(int i = 0; i < floors[0]; i++){
+        floor[i].display();
+      }
       //床判定
       for(int i = 0; i < floors[0]; i++){
         if(floor[i].isstand()){
@@ -128,16 +124,18 @@ void draw() {
     
     case 1:    
     //ステージ1の内容はここで書いてください
-      for(int i = floors[0]; i < floors[0]+floors[1]; i++){
-        floor[i].display();
-      }
     
       //壁判定
       for(int i = walls[0]; i < walls[0]+walls[1]; i++){
+        wall[i].display();
         wall[i].isbound();
       }
       //
+      wall[1].move(1, 0, width, 0);
       
+      for(int i = floors[0]; i < floors[0]+floors[1]; i++){
+        floor[i].display();
+      }
       //床判定
       for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         if(floor[i].isstand()){

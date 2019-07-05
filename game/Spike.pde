@@ -3,8 +3,10 @@ abstract class Spike extends Trap{
   char direction; //トゲの向き(上：u，下：d，左：l，右：r)
   
   Spike(float spikeX, float spikeY, char spikeD){
-    x = spikeX;
-    y = spikeY;
+    x0 = spikeX;
+    y0 = spikeY;
+    x = x0;
+    y = y0;
     direction = spikeD;
   }
   
