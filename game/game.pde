@@ -96,10 +96,15 @@ void draw() {
   switch(stage){
     case 0:
     //ステージ開始画面(0)の内容はここで書いてください
-      floor[0].display();
-      wall[0].display();
-      wall[1].display();
+      for(int i = 0; i < floors[0]; i++){
+        floor[i].display();
+      }
+
+      for(int i = 0; i < walls[0]; i++){
+        wall[i].display();
+      }
       wall[1].move(1,0,100,0);
+      
       //壁判定
       for(int i = 0; i < walls[0]; i++){
         wall[i].isbound();
@@ -109,10 +114,10 @@ void draw() {
       //床判定
       for(int i = 0; i < floors[0]; i++){
         if(floor[i].isstand()){
-          ground  = floor[i].y+player.r;
+          ground = floor[i].y+player.r;
           break;
         }else{
-          ground =1000;
+          ground = 1000;
         }
       }
       //
@@ -121,12 +126,12 @@ void draw() {
       judge_stage();
       break;
     
-    case 1:
-      for(int i=floors[0]; i<floors[0]+floors[1]; i++){
+    case 1:    
+    //ステージ1の内容はここで書いてください
+      for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         floor[i].display();
       }
     
-    //ステージ1の内容はここで書いてください
       //壁判定
       for(int i = walls[0]; i < walls[0]+walls[1]; i++){
         wall[i].isbound();
@@ -136,15 +141,15 @@ void draw() {
       //床判定
       for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         if(floor[i].isstand()){
-          ground  = floor[i].y+player.r;
+          ground = floor[i].y+player.r;
           break;
         }else{
-          ground =1000;
+          ground = 1000;
         }
       }
       //
     
-      for(int i=spikes[0]; i<spikes[0]+spikes[1]; i++){
+      for(int i = spikes[0]; i < spikes[0]+spikes[1]; i++){
         spike[i].display();
         if( spike[i].isTouched(player.x, player.y) ){
           player.isDied = true;
