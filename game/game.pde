@@ -87,6 +87,11 @@ void setup() {
 void draw() {
   
   background(255);
+  
+  if(player.y < 0){
+    player.isDied = true;
+  }
+  
   //ステージ画面ごとにWALLと床を設定してください
   switch(stage){
     case 0:
@@ -117,10 +122,9 @@ void draw() {
       break;
     
     case 1:
-      floor[1].display();
-      floor[2].display();
-      floor[3].display();
-      floor[4].display();
+      for(int i=floors[0]; i<floors[0]+floors[1]; i++){
+        floor[i].display();
+      }
     
     //ステージ1の内容はここで書いてください
       //壁判定
@@ -139,13 +143,21 @@ void draw() {
         }
       }
       //
-      
-      spike[0].display();
-      spike[1].display();
-      spike[2].display();
-      spike[3].display();
+    
+      for(int i=spikes[0]; i<spikes[0]+spikes[1]; i++){
+        spike[i].display();
+        if( spike[i].isTouched(player.x, player.y) ){
+          player.isDied = true;
+        }
+      }
       spike[0].move(3.0);
-      magma[0].display();
+      
+      for(int i=magmas[0]; i<magmas[0]+magmas[1]; i++){
+        magma[i].display();
+        if( magma[i].isTouched(player.x, player.y) ){
+          player.isDied = true;
+        }
+      }
       
       player.move();
       judge_stage();
