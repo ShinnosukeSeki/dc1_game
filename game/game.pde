@@ -88,7 +88,7 @@ void draw() {
   
   background(255);
   
-  if(player.y < 0){
+  if(player.y > height){
     player.isDied = true;
   }
   
@@ -193,7 +193,16 @@ void draw() {
     default:
       break;
   }  
+  
   player.display();
+    
+  if(player.isDied){
+    background(255);
+    fill(0);
+    textSize(40);
+    text("GAME OVER", width/2-50, height/2-20);
+    noLoop();
+  }
 }
 
 /*
