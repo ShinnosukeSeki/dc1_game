@@ -4,8 +4,10 @@ class Wall{
   float h;
   
   Wall(float wallX, float wallY, float wallH){
-    x = wallX;
-    y = wallY;
+    x0 = wallX;
+    y0 = wallY;
+    x = x0;
+    y = y0;
     h = wallH;
   }
   
