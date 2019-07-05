@@ -5,7 +5,7 @@
 */
 
 int stage;//ステージ
-int floors[] = {1, 4, 0}; //floors[i]はステージ1が必要される床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
 int walls[]  = {2, 0, 0};
 int spikes[] = {0, 4, 0};
 int magmas[] = {0, 1, 0};
@@ -201,7 +201,21 @@ void draw() {
     fill(0);
     textSize(40);
     text("GAME OVER", width/2-50, height/2-20);
-    noLoop();
+    textSize(30);
+    text("r:restart", width/2-50, height/2+20);
+    
+    if(keyPressed){
+      if(key == 'r'){
+        stage = 0;
+        for(int i = 0; i < walls[0]+walls[1]+walls[2]; i++){
+          wall[i].setDefault();
+        }
+        for(int i = 0; i < spikes[0]+spikes[1]+spikes[2]; i++){
+          spike[i].setDefault();
+        }
+        player.setDefault();
+      }
+    }
   }
 }
 

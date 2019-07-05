@@ -1,5 +1,5 @@
 class Wall{
-  float x,y;
+  float x0, y0, x, y;
   float w=15;
   float h;
   
@@ -7,6 +7,11 @@ class Wall{
     x = wallX;
     y = wallY;
     h = wallH;
+  }
+  
+  void setDefault(){
+    x = x0;
+    y = y0;
   }
   
   void display(){

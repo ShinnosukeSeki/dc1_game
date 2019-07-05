@@ -1,5 +1,5 @@
 class Java_c {
-  float x, y, dx, dy, vy;
+  float x0, y0, x, y, dx, dy, vy;
   
   // Javaちゃんの大きさ
   float r = 15.0;
@@ -20,8 +20,16 @@ class Java_c {
   boolean isDied = false;
   
   Java_c(float initial_x, float initial_y) {
-    x = initial_x;
-    y = initial_y-r;
+    x0 = initial_x;
+    y0 = initial_y-r;
+    x = x0;
+    y = y0;
+  }
+  
+  void setDefault(){
+    x = x0;
+    y = y0;
+    isDied = false;
   }
   
   
