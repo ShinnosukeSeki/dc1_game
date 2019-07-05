@@ -66,7 +66,7 @@ void setup() {
   }
   spike = new Spike[n_spike];
   spike[0] = new MovingSpike(width/2, height-30, 'u');
-  spike[1] = new StoppingSpike(width/2, height-390, 'd');
+  spike[1] = new StoppingSpike(440, height-360, 'd');
   spike[2] = new StoppingSpike(400, height-30, 'u');
   spike[3] = new StoppingSpike(500, height-30, 'u');
   
