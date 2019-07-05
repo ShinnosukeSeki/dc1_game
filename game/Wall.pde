@@ -19,7 +19,7 @@ class Wall{
     rect(x, y, w/2, h);
   }
     
-  void move(float stepX, float stepY, float limitX, float limitY){
+  void move(float limitX, float limitY){
   //do nothing
   }
   

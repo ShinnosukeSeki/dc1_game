@@ -1,12 +1,15 @@
 class MovingWall extends Wall{
   float x0 = x;
   float y0 = y;
+  float stepX, stepY;
   
-  MovingWall(float wallX, float wallY, float wallH){
+  MovingWall(float wallX, float wallY, float wallH, float wallStepX, float wallStepY){
     super(wallX, wallY, wallH);
+    stepX = wallStepX;
+    stepY = wallStepY;
   }
   
-  void move(float stepX, float stepY, float limitX, float limitY){//limitX,limitY = 壁が跳ね返る座標
+  void move(float limitX, float limitY){//limitX,limitY = 壁が跳ね返る座標
     x += stepX;
     y += stepY;
     if(x > limitX || x < x0){

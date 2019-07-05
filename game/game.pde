@@ -44,8 +44,8 @@ void setup() {
     n_floor += floors[i];
   }
   floor = new Floor[n_floor];
-  floor[0] = new Floor(0,height-150,width,10);
-  floor[1] = new Floor(0,height-30,width,10);
+  floor[0] = new Floor(0, height-150, width, 10);
+  floor[1] = new Floor(0, height-30, width, 10);
   floor[2] = new Floor(200,height-150, 200, 10);
   floor[3] = new Floor(350, height-270, 100, 10);
   floor[4] = new Floor(420, height-400, 50, 10);
@@ -59,7 +59,7 @@ void setup() {
   }
   wall = new Wall[n_wall];
   wall[0] = new Wall(100,height-110,100);
-  wall[1] = new MovingWall(50,0,300);
+  wall[1] = new MovingWall(50, 0, 300, 1, 0);
   
   player = new Java_c(30, height-300);
   b = new Bullet[n_bullet];
@@ -142,7 +142,7 @@ void draw() {
         wall[i].isbound();
       }
       //
-      wall[1].move(1, 0, width, 0);
+      wall[1].move(width, 0);
       
       for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         floor[i].display();

@@ -3,6 +3,6 @@ class StoppingWall extends Wall{
     super(wallX, wallY, wallH);
   }
   
-  void move(float stepX, float stepY, float limitX, float limitY){
+  void move(float limitX, float limitY){
   }
 }
