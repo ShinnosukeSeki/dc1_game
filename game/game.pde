@@ -3,7 +3,7 @@
                              グローバル変数の宣言，初期化
 ======================================================================
 */
-
+int tip;
 int stage;//ステージ
 int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
 int walls[]  = {0, 2, 0};
@@ -32,7 +32,7 @@ void setup() {
   size(800, 500);
   
   stage = 0;
-  
+  tip = 0;
   frameRate(120);
   textSize(30);
   textAlign(CENTER, CENTER);
@@ -117,6 +117,9 @@ void draw() {
         }
       }
       //
+      if(tip >= 3){
+        text("s",50,50);
+      }
       
       player.move();
       judge_stage();
@@ -204,6 +207,7 @@ void draw() {
     
     if(keyPressed){
       if(key == 'r'){
+        tip++;
         stage = 0;
         for(int i = 0; i < walls[0]+walls[1]+walls[2]; i++){
           wall[i].setDefault();
