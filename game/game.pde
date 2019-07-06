@@ -6,9 +6,9 @@
 int tip;
 int stage;//ステージ
 int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
-int walls[]  = {0, 4, 0};
+int walls[]  = {0, 5, 0};
 int spikes[] = {0, 5, 0};
-int magmas[] = {0, 1, 0};
+int magmas[] = {0, 3, 0};
 
 int n_floor = 0;
 int n_wall = 0;
@@ -47,8 +47,8 @@ void setup() {
   floor[0] = new Floor(0, height-150, width, 10);
   floor[1] = new Floor(0, height-30, width, 10);
   floor[2] = new Floor(200,height-150, 200, 10);
-  floor[3] = new Floor(350, height-270, 100, 10);
-  floor[4] = new Floor(420, height-400, 50, 10);
+  floor[3] = new Floor(300, height-270, 100, 10);
+  floor[4] = new Floor(350, height-400, 50, 10);
   /*
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
@@ -62,6 +62,7 @@ void setup() {
   wall[1] = new StoppingWall(100,height-110,100);
   wall[2] = new StoppingWall(330, height-130, 120);
   wall[3] = new StoppingWall(200,height-175, 40);
+  wall[4] = new StoppingWall(400, height-385,260);
   
   //Spikeのセット
   for(int i=0; i < spikes.length; i++){
@@ -69,8 +70,8 @@ void setup() {
   }
   spike = new Spike[n_spike];
   spike[0] = new MovingSpike(width/2, height-30, 'u');
-  spike[1] = new StoppingSpike(440, height-360, 'd');
-  spike[2] = new StoppingSpike(400, height-30, 'u');
+  spike[1] = new StoppingSpike(375, height-360, 'd');
+  spike[2] = new StoppingSpike(425, height-30, 'u');
   spike[3] = new StoppingSpike(500, height-30, 'u');
   spike[4] = new StoppingSpike(215, height-110, 'd');
   
@@ -79,7 +80,9 @@ void setup() {
     n_magma += magmas[i];
   }
   magma = new Magma[n_magma];
-  magma[0] = new StoppingMagma(270, height-135, 50, 10);
+  magma[0] = new StoppingMagma(280, height-15, 50, 10);
+  magma[1] = new StoppingMagma(350, height-135, 50, 10);
+  magma[2] = new StoppingMagma(350, height-255, 50, 10);
   
   //Java_c（プレイヤー）とBulletのセット
   player = new Java_c(30, height-300);
