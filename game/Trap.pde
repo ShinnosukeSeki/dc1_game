@@ -3,5 +3,5 @@ abstract class Trap{
   
   abstract void move(float step);
   
-  abstract boolean isTouched(float playerX, float playerY);
+  abstract boolean isTouched(float playerX, float playerY, float playerR);
 }

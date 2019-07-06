@@ -6,8 +6,8 @@
 int tip;
 int stage;//ステージ
 int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
-int walls[]  = {0, 2, 0};
-int spikes[] = {0, 4, 0};
+int walls[]  = {0, 4, 0};
+int spikes[] = {0, 5, 0};
 int magmas[] = {0, 1, 0};
 
 int n_floor = 0;
@@ -58,15 +58,12 @@ void setup() {
     n_wall += walls[i];
   }
   wall = new Wall[n_wall];
-  wall[0] = new Wall(100,height-110,100);
-  wall[1] = new MovingWall(50, 0, 300, 1, 0);
+  wall[0] = new MovingWall(50, 0, 300, 1, 0);
+  wall[1] = new StoppingWall(100,height-110,100);
+  wall[2] = new StoppingWall(330, height-130, 120);
+  wall[3] = new StoppingWall(200,height-175, 40);
   
-  player = new Java_c(30, height-300);
-  b = new Bullet[n_bullet];
-  for(int i=0; i < n_bullet; i ++) {
-    b[i] = new Bullet();
-  }
-  
+  //Spikeのセット
   for(int i=0; i < spikes.length; i++){
     n_spike += spikes[i];
   }
@@ -75,14 +72,21 @@ void setup() {
   spike[1] = new StoppingSpike(440, height-360, 'd');
   spike[2] = new StoppingSpike(400, height-30, 'u');
   spike[3] = new StoppingSpike(500, height-30, 'u');
+  spike[4] = new StoppingSpike(215, height-110, 'd');
   
+  //Magmaのセット
   for(int i=0; i < magmas.length; i++){
     n_magma += magmas[i];
   }
   magma = new Magma[n_magma];
-  magma[0] = new StoppingMagma(200, 400, 50, 10);
+  magma[0] = new StoppingMagma(270, height-135, 50, 10);
   
-
+  //Java_c（プレイヤー）とBulletのセット
+  player = new Java_c(30, height-300);
+  b = new Bullet[n_bullet];
+  for(int i=0; i < n_bullet; i ++) {
+    b[i] = new Bullet();
+  }
 }
 
 /*
@@ -142,7 +146,7 @@ void draw() {
         wall[i].isbound();
       }
       //
-      wall[1].move(width, 0);
+      wall[0].move(width, 0);
       
       for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         floor[i].display();
@@ -160,7 +164,7 @@ void draw() {
     
       for(int i = spikes[0]; i < spikes[0]+spikes[1]; i++){
         spike[i].display();
-        if( spike[i].isTouched(player.x, player.y) ){
+        if( spike[i].isTouched(player.x, player.y, player.r) ){
           player.isDied = true;
         }
       }
@@ -168,7 +172,7 @@ void draw() {
       
       for(int i=magmas[0]; i<magmas[0]+magmas[1]; i++){
         magma[i].display();
-        if( magma[i].isTouched(player.x, player.y) ){
+        if( magma[i].isTouched(player.x, player.y, player.r) ){
           player.isDied = true;
         }
       }

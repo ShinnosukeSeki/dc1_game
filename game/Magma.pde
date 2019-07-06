@@ -17,8 +17,9 @@ abstract class Magma extends Trap{
   
   abstract void move(float step);
   
-  boolean isTouched(float playerX, float playerY) {
-    if((x <= playerX && playerX <= x + w) && (y <= playerY && playerY <= y + h)) {    //playerがマグマの範囲内に入ったら
+  boolean isTouched(float playerX, float playerY, float playerR) {
+    if( ((x <= playerX+playerR && playerX+playerR <= x + w) || (x <= playerX-playerR && playerX-playerR <= x + w))
+    && ((y <= playerY+playerR && playerY+playerR <= y + h) || (y <= playerY+playerR && playerY+playerR <= y + h)) ) {    //playerがマグマの範囲内に入ったら
       return true;
     } else {
       return false;

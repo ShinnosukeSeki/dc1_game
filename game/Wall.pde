@@ -1,4 +1,4 @@
-class Wall{
+abstract class Wall{
   float x0, y0, x, y;
   float w=15;
   float h;

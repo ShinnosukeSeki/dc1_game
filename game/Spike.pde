@@ -55,9 +55,9 @@ abstract class Spike extends Trap{
   
   abstract void move(float step);
   
-  boolean isTouched(float playerX, float playerY){
-    if(playerX >= x-size/2 && playerX <= x+size/2
-    && playerY >= y-size/2 && playerY <= y+size/2){
+  boolean isTouched(float playerX, float playerY, float playerR){
+    if( (x-size/2 <= playerX+playerR && playerX-playerR <= x+size/2 || x-size/2 <= playerX-playerR && playerX-playerR <= x+size/2)
+     && (y-size/2 <= playerY+playerR && playerY-playerR <= y+size/2 || y-size/2 <= playerY+playerR && playerY-playerR <= y+size/2) ){
       return true;
     }else{
       return false;
