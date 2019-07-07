@@ -1,6 +1,7 @@
-abstract class Spike extends Trap{
+abstract class Spike{
   float x0, y0, x, y, size = 30; //x0,y0は初期座標, x,yはトゲの中心座標
   char direction; //トゲの向き(上：u，下：d，左：l，右：r)
+  boolean isMoved = false;
   
   Spike(float spikeX, float spikeY, char spikeD){
     x0 = spikeX;
@@ -13,6 +14,7 @@ abstract class Spike extends Trap{
   void setDefault(){
     x = x0;
     y = y0;
+    isMoved = false;
   }
   
   void display(){
@@ -53,7 +55,7 @@ abstract class Spike extends Trap{
     popMatrix();      
   }
   
-  abstract void move(float step);
+  abstract void move(float step, float playerX, float playerY, float sideR, float frontR); 
   
   boolean isTouched(float playerX, float playerY, float playerR){
     if( (x-size/2 <= playerX+playerR && playerX-playerR <= x+size/2 || x-size/2 <= playerX-playerR && playerX-playerR <= x+size/2)

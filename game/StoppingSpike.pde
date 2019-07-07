@@ -3,6 +3,7 @@ class StoppingSpike extends Spike{
     super(spikeX, spikeY, spikeD);
   }
   
-  void move(float step){
+  void move(float step, float playerX, float playerY, float sideR, float frontR){
+    //動かない
   }
 }

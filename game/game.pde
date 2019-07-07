@@ -5,7 +5,7 @@
 */
 int tip;
 int stage;//ステージ
-int floors[] = {1, 4, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int floors[] = {1, 7, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
 int walls[]  = {0, 5, 0};
 int spikes[] = {0, 5, 0};
 int magmas[] = {0, 3, 0};
@@ -39,16 +39,20 @@ void setup() {
   textSize(30);
   textAlign(CENTER, CENTER);
   flag = new Flag();
+  
   //floorのセット
   for(int i=0; i<floors.length; i++){
     n_floor += floors[i];
   }
   floor = new Floor[n_floor];
   floor[0] = new Floor(0, height-150, width, 10);
-  floor[1] = new Floor(0, height-30, width, 10);
-  floor[2] = new Floor(200,height-150, 200, 10);
-  floor[3] = new Floor(300, height-270, 100, 10);
-  floor[4] = new Floor(350, height-400, 50, 10);
+  floor[1] = new Floor(0, height-30, width/2-10, 10);
+  floor[2] = new Floor(width/2-10, height-30, 150, 10);
+  floor[3] = new Floor(width/2+140, height-30, width/2-140, 10);
+  floor[4] = new Floor(200,height-150, 200, 10);
+  floor[5] = new Floor(300, height-270, 100, 10);
+  floor[6] = new Floor(350, height-400, 50, 10);
+  floor[7] = new Floor(550, height-400, 20, 10);
   /*
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
@@ -60,29 +64,30 @@ void setup() {
   wall = new Wall[n_wall];
   wall[0] = new MovingWall(50, 0, 300, 1, 0);
   wall[1] = new StoppingWall(100,height-110,100);
-  wall[2] = new StoppingWall(330, height-130, 120);
-  wall[3] = new StoppingWall(200,height-175, 40);
-  wall[4] = new StoppingWall(400, height-385,260);
+  wall[2] = new StoppingWall(200,height-175, 40);
+  wall[3] = new StoppingWall(400, height-385,260);
+  wall[4] = new StoppingWall(width-10, 0, 200);
   
   //Spikeのセット
   for(int i=0; i < spikes.length; i++){
     n_spike += spikes[i];
   }
   spike = new Spike[n_spike];
-  spike[0] = new MovingSpike(width/2, height-30, 'u');
-  spike[1] = new StoppingSpike(375, height-360, 'd');
-  spike[2] = new StoppingSpike(425, height-30, 'u');
-  spike[3] = new StoppingSpike(500, height-30, 'u');
-  spike[4] = new StoppingSpike(215, height-110, 'd');
+  spike[0] = new MovingSpike(350, height-110, 'd');
+  spike[1] = new StoppingSpike(215, height-110, 'd');
+  spike[2] = new StoppingSpike(375, height-360, 'd');
+  spike[3] = new StoppingSpike(550, height-30, 'u');
+  spike[4] = new StoppingSpike(620, height-30, 'u');
   
   //Magmaのセット
   for(int i=0; i < magmas.length; i++){
     n_magma += magmas[i];
   }
   magma = new Magma[n_magma];
-  magma[0] = new StoppingMagma(280, height-15, 50, 10);
-  magma[1] = new StoppingMagma(350, height-135, 50, 10);
-  magma[2] = new StoppingMagma(350, height-255, 50, 10);
+  magma[0] = new StoppingMagma(350, height-135, 50, 10);
+  magma[1] = new StoppingMagma(350, height-255, 50, 10);
+  magma[2] = new StoppingMagma(560, height-15, 50, 10);
+  
   
   //Java_c（プレイヤー）とBulletのセット
   player = new Java_c(30, height-300);
@@ -149,7 +154,7 @@ void draw() {
         wall[i].isbound();
       }
       //
-      wall[0].move(width, 0);
+      wall[0].move(width-20, 0);
       
       for(int i = floors[0]; i < floors[0]+floors[1]; i++){
         floor[i].display();
@@ -164,6 +169,7 @@ void draw() {
         }
       }
       //
+      floor[2].fall(5);
     
       for(int i = spikes[0]; i < spikes[0]+spikes[1]; i++){
         spike[i].display();
@@ -171,7 +177,7 @@ void draw() {
           player.isDied = true;
         }
       }
-      spike[0].move(3.0);
+      spike[0].move(5, player.x, player.y, 25, 120);
       
       for(int i=magmas[0]; i<magmas[0]+magmas[1]; i++){
         magma[i].display();
@@ -226,6 +232,9 @@ void draw() {
         stage = 0;
         for(int i = 0; i < walls[0]+walls[1]+walls[2]; i++){
           wall[i].setDefault();
+        }
+        for(int i = 0; i < floors[0]+floors[1]+floors[2]; i++){
+          floor[i].setDefault();
         }
         for(int i = 0; i < spikes[0]+spikes[1]+spikes[2]; i++){
           spike[i].setDefault();

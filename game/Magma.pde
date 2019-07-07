@@ -1,4 +1,4 @@
-abstract class Magma extends Trap{
+abstract class Magma{
   float x, y, w, h;                           //x,yはマグマの左上頂点の座標, w,hはマグマの幅と高さ
   
   Magma(float magmaX, float magmaY, float magmaW, float magmaH) {
