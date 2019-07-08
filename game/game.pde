@@ -5,9 +5,9 @@
 */
 int tip;
 int stage;//ステージ
-int floors[] = {1, 7, 0}; //floors[i]はステージ1で必要な床数,bはステージ2,cはステージ3,dはステージ4,各自具体的な数字で与えてください。 
+int floors[] = {1, 7, 0}; //floors[i]はステージiで必要な床数,各自具体的な数字で与えてください。 
 int walls[]  = {0, 5, 0};
-int spikes[] = {0, 5, 0};
+int spikes[] = {0, 6, 0};
 int magmas[] = {0, 3, 0};
 
 int n_floor = 0;
@@ -66,7 +66,7 @@ void setup() {
   wall[1] = new StoppingWall(100,height-110,100);
   wall[2] = new StoppingWall(200,height-175, 40);
   wall[3] = new StoppingWall(400, height-385,260);
-  wall[4] = new StoppingWall(width-10, 0, 200);
+  wall[4] = new StoppingWall(width-10, 0, 400);
   
   //Spikeのセット
   for(int i=0; i < spikes.length; i++){
@@ -78,6 +78,7 @@ void setup() {
   spike[2] = new StoppingSpike(375, height-360, 'd');
   spike[3] = new StoppingSpike(550, height-30, 'u');
   spike[4] = new StoppingSpike(620, height-30, 'u');
+  spike[5] = new StoppingSpike(width-25, 350, 'l');
   
   //Magmaのセット
   for(int i=0; i < magmas.length; i++){
@@ -179,7 +180,7 @@ void draw() {
       }
       spike[0].move(5, player.x, player.y, 25, 120);
       
-      for(int i=magmas[0]; i<magmas[0]+magmas[1]; i++){
+      for(int i = magmas[0]; i < magmas[0]+magmas[1]; i++){
         magma[i].display();
         if( magma[i].isTouched(player.x, player.y, player.r) ){
           player.isDied = true;
