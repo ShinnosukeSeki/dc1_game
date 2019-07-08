@@ -40,9 +40,9 @@ class Bullet {
     // 弾を打った時のプレイヤーとマウスのx座標の関係を参照し
     // 弾のx座標の更新の仕方を変える
     if(x_0 > x_1) {
-      x --;
+      x =x-5;
     } else {
-      x ++;
+      x =x+5;
     }
 
     y = (y_1-y_0) / (x_1-x_0)  * (x-x_0) + y_0;
@@ -58,7 +58,9 @@ class Bullet {
     }
     
     // 敵に当たったら弾と敵を描画しないようにする
-    // hogehoge
+    if(dist(x,y,enemy.x,enemy.y) <= enemy.size * 2){
+      enemy.isDied = true;
+    }
   }
 
 }

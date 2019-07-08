@@ -7,8 +7,8 @@ int tip;
 int stage;//ステージ
 int floors[] = {1, 7, 3}; //floors[i]はステージiで必要な床数,各自具体的な数字で与えてください。 
 int walls[]  = {0, 5, 4};
-int spikes[] = {0, 6, 0};
-int magmas[] = {0, 3, 0};
+int spikes[] = {0, 6, 2};
+int magmas[] = {0, 3, 1};
 
 int n_floor = 0;
 int n_wall = 0;
@@ -20,6 +20,7 @@ float ground = 1000;
 Wall wall[];
 Floor floor[];
 Flag flag;
+Enemy enemy;
 Java_c player;
 Bullet b[];
 Spike spike[];
@@ -33,7 +34,7 @@ void setup() {
   
   size(800, 500);
   
-  stage = 2;
+  stage = 0;
   tip = 0;
   frameRate(120);
   textSize(30);
@@ -70,9 +71,9 @@ void setup() {
   wall[2] = new StoppingWall(200,height-175, 40);
   wall[3] = new StoppingWall(400, height-385,260);
   wall[4] = new StoppingWall(width-10, 0, 400);
-  wall[5] = new MovingWall(20,height-80,100,-1,0);
+  wall[5] = new MovingWall(0,height-80,80,-1,0);
   wall[6] = new StoppingWall(150, height-80,100);
-  wall[7] = new StoppingWall(width-150, height-230,200);
+  wall[7] = new MovingWall(width-150, height-230,200,-5,0);
   wall[8] = new StoppingWall(width-10, 0,height);
   
   
@@ -87,6 +88,8 @@ void setup() {
   spike[3] = new StoppingSpike(550, height-30, 'u');
   spike[4] = new StoppingSpike(620, height-30, 'u');
   spike[5] = new StoppingSpike(width-25, 350, 'l');
+  spike[6] = new StoppingSpike(width-400, 350, 'd');
+  spike[7] = new StoppingSpike(width-300,height-15 , 'u');
   
   //Magmaのセット
   for(int i=0; i < magmas.length; i++){
@@ -96,9 +99,11 @@ void setup() {
   magma[0] = new StoppingMagma(350, height-135, 50, 10);
   magma[1] = new StoppingMagma(350, height-255, 50, 10);
   magma[2] = new StoppingMagma(560, height-15, 50, 10);
+  magma[3] = new StoppingMagma(width-200,height-15,50,10);
   
   
   //Java_c（プレイヤー）とBulletのセット
+  enemy = new Enemy(100,400,20);
   player = new Java_c(30, height-300);
   b = new Bullet[n_bullet];
   for(int i=0; i < n_bullet; i ++) {
@@ -210,7 +215,10 @@ void draw() {
         wall[i].isbound();
       }
       //
-      wall[5].move(230,0);
+      wall[5].move(400,0);
+      if(enemy.life <= 0){
+        wall[7].move(3000,0);
+      }
       //床判定
       for(int i = floors[0]+floors[1]; i < floors[0]+floors[1]+floors[2]; i++){
         if(floor[i].isstand()){
@@ -220,10 +228,27 @@ void draw() {
           ground =1000;
         }
       }
+      
+      for(int i = spikes[0]+spikes[1]; i < spikes[0]+spikes[1]+spikes[2]; i++){
+        spike[i].display();
+        if( spike[i].isTouched(player.x, player.y, player.r) ){
+          player.isDied = true;
+        }
+      }
+       
       for(int i = floors[0]+floors[1]; i < floors[0]+floors[1]+floors[2]; i++){
         floor[i].display();
       }
+      for(int i = magmas[0]+magmas[1]; i < magmas[0]+magmas[1]+magmas[2]; i++){
+        magma[i].display();
+        if( magma[i].isTouched(player.x, player.y, player.r) ){
+          player.isDied = true;
+        }
+      }
+      
       //
+      enemy.move();
+      enemy.display();
       flag.display();
       player.move();
       judge_stage();
