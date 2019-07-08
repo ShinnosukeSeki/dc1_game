@@ -5,8 +5,8 @@
 */
 int tip;
 int stage;//ステージ
-int floors[] = {1, 7, 0}; //floors[i]はステージiで必要な床数,各自具体的な数字で与えてください。 
-int walls[]  = {0, 5, 0};
+int floors[] = {1, 7, 3}; //floors[i]はステージiで必要な床数,各自具体的な数字で与えてください。 
+int walls[]  = {0, 5, 4};
 int spikes[] = {0, 6, 0};
 int magmas[] = {0, 3, 0};
 
@@ -33,7 +33,7 @@ void setup() {
   
   size(800, 500);
   
-  stage = 0;
+  stage = 2;
   tip = 0;
   frameRate(120);
   textSize(30);
@@ -53,6 +53,9 @@ void setup() {
   floor[5] = new Floor(300, height-270, 100, 10);
   floor[6] = new Floor(350, height-400, 50, 10);
   floor[7] = new Floor(550, height-400, 20, 10);
+  floor[8] = new Floor(200,height-30,600,10);
+  floor[9] = new Floor(0,height-30,150,10);
+  floor[10] = new Floor(150,height-150,50,10);
   /*
   ここで床を設定してください,例:floor[0]= new Floor(x,y,l,h);　-----x,yは座標,lは長さ,hは高さ,rect()に対応する
   */
@@ -67,6 +70,11 @@ void setup() {
   wall[2] = new StoppingWall(200,height-175, 40);
   wall[3] = new StoppingWall(400, height-385,260);
   wall[4] = new StoppingWall(width-10, 0, 400);
+  wall[5] = new MovingWall(20,height-80,100,-1,0);
+  wall[6] = new StoppingWall(150, height-80,100);
+  wall[7] = new StoppingWall(width-150, height-230,200);
+  wall[8] = new StoppingWall(width-10, 0,height);
+  
   
   //Spikeのセット
   for(int i=0; i < spikes.length; i++){
@@ -138,10 +146,13 @@ void draw() {
         }
       }
       //
-      if(tip >= 3){
-        text("s",50,50);
+      if(tip == 1){
+        text("＼(^o^)／,お前は死んだな",50,50);//萩に伝言：これを画像にして表示する、お願いします  <--  チョウより
+      }else if(tip == 2){
+        text("お前ゲーム苦手だな、こんな簡単なゲームさえクリアできないとは",50,50);
+      }else if(tip >= 3){
+        text("フラグだよ、フラグだ、画像のフラグじゃなく、文字の方よ",50,50);
       }
-      
       player.move();
       judge_stage();
       break;
@@ -195,10 +206,11 @@ void draw() {
     //ステージ2内容はここで書いてください
       //壁判定
       for(int i = walls[0]+walls[1]; i < walls[0]+walls[1]+walls[2]; i++){
+        wall[i].display();
         wall[i].isbound();
       }
       //
-      
+      wall[5].move(230,0);
       //床判定
       for(int i = floors[0]+floors[1]; i < floors[0]+floors[1]+floors[2]; i++){
         if(floor[i].isstand()){
@@ -208,7 +220,11 @@ void draw() {
           ground =1000;
         }
       }
+      for(int i = floors[0]+floors[1]; i < floors[0]+floors[1]+floors[2]; i++){
+        floor[i].display();
+      }
       //
+      flag.display();
       player.move();
       judge_stage();
       break;
@@ -229,7 +245,9 @@ void draw() {
     
     if(keyPressed){
       if(key == 'r'){
-        tip++;
+        if(stage == 2){
+          tip++;
+        }
         stage = 0;
         for(int i = 0; i < walls[0]+walls[1]+walls[2]; i++){
           wall[i].setDefault();
