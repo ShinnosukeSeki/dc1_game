@@ -17,6 +17,15 @@ int n_magma = 0;
 int n_bullet = 3;          // 撃てる弾の数
 float ground = 1000;
 
+PImage description_img1;
+PImage description_img2;
+PImage tip_img0;
+PImage tip_img1;
+PImage tip_img2;
+PImage tip_img3;
+PImage tip_img4;
+PImage clear_img;
+
 Wall wall[];
 Floor floor[];
 Flag flag;
@@ -37,6 +46,7 @@ void setup() {
   stage = 0;
   tip = 0;
   frameRate(120);
+  noSmooth();
   textSize(30);
   textAlign(CENTER, CENTER);
   flag = new Flag();
@@ -109,6 +119,16 @@ void setup() {
   for(int i=0; i < n_bullet; i ++) {
     b[i] = new Bullet();
   }
+  
+  // 画像データの読み込み
+  description_img1 = loadImage("description.png");
+  description_img2 = loadImage("description2.png");
+  tip_img0 = loadImage("tip0.png");
+  tip_img1 = loadImage("tip1.png");
+  tip_img2 = loadImage("tip2.png");
+  tip_img3 = loadImage("tip3.png");
+  tip_img4 = loadImage("tip4.png");
+  clear_img = loadImage("clear.jpg");
 }
 
 /*
@@ -118,8 +138,6 @@ void setup() {
 */
 void draw() {
   
-  background(255);
-  
   if(player.y > height){
     player.isDied = true;
   }
@@ -128,15 +146,10 @@ void draw() {
   switch(stage){
     case 0:
     //ステージ開始画面(0)の内容はここで書いてください
+      background(230);
     
-      text("hogehoge", width/2, height/2);
-    
-      //壁判定
-      for(int i = 0; i < walls[0]; i++){
-        wall[i].display();
-        wall[i].isbound();
-      }
-      //
+      image(description_img1, 0, 0, width/1.5, height/2);
+      image(description_img2, 500, 0, 300, height/2);
       
       for(int i = 0; i < floors[0]; i++){
         floor[i].display();
@@ -150,20 +163,27 @@ void draw() {
           ground = 1000;
         }
       }
-      //
-      if(tip == 1){
-        text("＼(^o^)／,お前は死んだな",50,50);//萩に伝言：これを画像にして表示する、お願いします  <--  チョウより
-      }else if(tip == 2){
-        text("お前ゲーム苦手だな、こんな簡単なゲームさえクリアできないとは",50,50);
-      }else if(tip >= 3){
-        text("フラグだよ、フラグだ、画像のフラグじゃなく、文字の方よ",50,50);
+      
+      // ヒントの描画処理
+      if(tip == 0) {
+        image(tip_img0, 50, height-100, 300, 70);
+      } else if(tip == 1){
+        image(tip_img1, 50, height-100, 300, 70);
+      } else if(tip == 2) {
+        image(tip_img2, 50, height-100, 300, 70);
+      } else if(tip == 3) {
+        image(tip_img3, 50, height-100, 300, 70);
+      } else if(tip >= 4) {
+        image(tip_img4, 50, height-100, 300, 90);
       }
+
       player.move();
       judge_stage();
       break;
     
     case 1:    
     //ステージ1の内容はここで書いてください
+      background(120);
     
       //壁判定
       for(int i = walls[0]; i < walls[0]+walls[1]; i++){
@@ -209,6 +229,8 @@ void draw() {
     
     case 2:
     //ステージ2内容はここで書いてください
+      background(190);
+    
       //壁判定
       for(int i = walls[0]+walls[1]; i < walls[0]+walls[1]+walls[2]; i++){
         wall[i].display();
@@ -270,7 +292,7 @@ void draw() {
     
     if(keyPressed){
       if(key == 'r'){
-        if(stage == 2){
+        if(stage == 0){
           tip++;
         }
         stage = 0;
@@ -293,6 +315,18 @@ void draw() {
       b[i].display();
       b[i].move();
       b[i].judge();
+    }
+  }
+  
+  // クリア判定(一回以上死んでいないとクリアできない)
+  if(tip > 0 && stage == 0) {
+    for(int i = 0; i < n_bullet; i++) {
+      if(b[i].isDisplayed == true) {
+        if(judge_clear((int)(b[i].x), (int)(b[i].y)) == true) {
+          image(clear_img, 0, 0, width, height);
+          noLoop();
+        }
+      }
     }
   }
 }
@@ -321,6 +355,17 @@ void judge_stage(){
       player.x = width - 1;
     }
   }
+}
+
+// 弾の座標を受け取り
+// 指定された範囲内に撃たれた時
+// ゲームクリア画面を表示するため
+// trueを返す
+boolean judge_clear(int x, int y) {  
+  if(100 < x && x < 200 && 100 < y && y < 140) {
+    return true;
+  }
+  return false;
 }
 
 void mouseClicked() {
