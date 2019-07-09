@@ -80,7 +80,7 @@ void setup() {
   wall[1] = new StoppingWall(100,height-110,100);
   wall[2] = new StoppingWall(200,height-175, 40);
   wall[3] = new StoppingWall(400, height-385,260);
-  wall[4] = new StoppingWall(width-10, 0, 400);
+  wall[4] = new StoppingWall(width-10, 250, 150);
   wall[5] = new MovingWall(0,height-80,80,-1,0);
   wall[6] = new StoppingWall(150, height-80,100);
   wall[7] = new MovingWall(width-150, height-230,200,-5,0);
@@ -286,9 +286,9 @@ void draw() {
     background(255);
     fill(0);
     textSize(40);
-    text("GAME OVER", width/2-50, height/2-20);
+    text("GAME OVER", width/2, height/2-20);
     textSize(30);
-    text("r:restart", width/2-50, height/2+20);
+    text("r:restart", width/2, height/2+20);
     
     if(keyPressed){
       if(key == 'r'){
