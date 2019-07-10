@@ -43,7 +43,7 @@ void setup() {
   
   size(800, 500);
   
-  stage = 0;
+  stage = 2;
   tip = 0;
   frameRate(120);
   noSmooth();
@@ -295,7 +295,7 @@ void draw() {
         if(stage == 0){
           tip++;
         }
-        stage = 0;
+        stage = 2;
         for(int i = 0; i < walls[0]+walls[1]+walls[2]; i++){
           wall[i].setDefault();
         }
@@ -306,6 +306,7 @@ void draw() {
           spike[i].setDefault();
         }
         player.setDefault();
+        enemy.setDefault();
       }
     }
   }
